@@ -5,7 +5,11 @@
             <div><strong>Заголовок: </strong> {{ post.title }}</div>
             <div><strong>Описание: </strong> {{ post.body }}</div>
         </div>
-        <div class="post__btns">
+        <div class="post_btns">
+            <my-button
+            @click="$router.push(`/posts/${post.id}`)"
+            style="margin: 0 10px;"
+            >Открыть</my-button>
             <my-button
             @click="$emit('remove', post)"
             >Удалить</my-button>
@@ -13,8 +17,6 @@
     </div>
 </template>
 <script>
-
-
 export default {
     props: {
         post: {
@@ -28,12 +30,14 @@ export default {
 <style scoped>
 .post {
     padding: 15px;
-    border: 2px solid blueviolet;
+    background: #273250;
     margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
-    
+.post_btns {
+    display: flex;
+    flex-direction: horizontal;
+}
 </style>

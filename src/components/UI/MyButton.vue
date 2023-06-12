@@ -12,8 +12,8 @@ export default {
 .btn {    
     padding: 10px 15px;
     background: none;
-    color: blue;
-    border: 1px solid violet;
+    background-color: #00497a;
+    color: #fff;
     border-radius: 5px;
 }
 </style>

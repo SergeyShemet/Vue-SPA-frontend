@@ -1,6 +1,6 @@
 <template >
-    <select :value="modelValue" @change="changeOption">
-        <option disabled value="">Выберите</option>
+    <select :value="modelValue" @change="changeOption" class="sel">
+        <option disabled value="">Сортировка...</option>
         <option
           v-for="opt in options"
           :key="opt.value"
@@ -29,5 +29,7 @@ export default {
 }
 </script>
 <style>
-    
+.sel {
+    background-color: #0b4f6c;
+}
 </style>
