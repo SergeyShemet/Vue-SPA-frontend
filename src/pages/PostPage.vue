@@ -15,9 +15,7 @@
           v-model="selectedSort"
           :options="sortOptions"
         />
-        
        </div>
-       
        <PostList
          :posts="sorteandsearchedPosts"
          @remove="removePost"
@@ -28,7 +26,6 @@
        <my-dialog v-model:show="dialogVisible">
         <PostForm @create="createPost"/> 
        </my-dialog>
-       
     </div>
 </template>
 
@@ -129,8 +126,6 @@ export default {
 </script>
 
 <style>
-
-
 .app_btns {
     display: flex;
     justify-content: space-between;
@@ -154,6 +149,5 @@ export default {
 
 .observer {
     height: 30px;
-    
 }
 </style>

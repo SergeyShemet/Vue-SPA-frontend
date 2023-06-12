@@ -1,24 +1,7 @@
-# vue_spa_frontend
+## Vue SPA Frontend
+Демо-приложение для работы с API, отработки роутинга, кастомных директив, анимаций манипуляций со списками, отработки декомпозиции (Composition API) и т.д.
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Установка и запуск
+- `npm install`
+- `npm run serve`
