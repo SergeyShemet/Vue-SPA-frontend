@@ -23,7 +23,8 @@
          v-if="!isPostsLoading"
        />
        <div v-else>Загрузка...</div>
-       <div class="page_wrapper">
+       <div ref="observer" class="observer"></div>
+       <!-- <div class="page_wrapper">
         <div
           v-for="(pageNum, index) in totalPages"
           :key="index"
@@ -35,22 +36,21 @@
         > 
             {{ pageNum }}
         </div>
-       </div>
+       </div> -->
        <my-dialog v-model:show="dialogVisible">
         <PostForm @create="createPost"/> 
        </my-dialog>
        
     </div>
 </template>
+
 <script>
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
-import MyButton from '@/components/UI/MyButton.vue';
 import axios from 'axios';
-import MySelect from '@/components/UI/MySelect.vue';
 
 export default {
-    components: { PostForm, PostList, MyButton, MySelect },
+    components: { PostForm, PostList },
     data() {
         return {
             posts: [],
@@ -81,8 +81,8 @@ export default {
         },
         changePage(pageNum) {
             this.page = pageNum;
-            this.fetchPosts();
         },
+    
         async fetchPosts() {
             try {
                 this.isPostsLoading = true;                
@@ -100,10 +100,36 @@ export default {
                 this.isPostsLoading = false;
             }
         },
+        async loadMorePosts() {
+            this.page += 1;
+            try {
+                         
+                    const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+                    params: {
+                        _page: this.page,
+                        _limit: this.limit 
+                    }
+                });
+                    this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit) ;
+                    this.posts = [...this.posts, ...response.data];
+            } catch (e) {
+                alert("Error: " + e.message)
+            } 
+        },
     },
-    
     mounted() {
         this.fetchPosts();
+        const options = {
+            rootMargin: '0px',
+            threshold: 1.0
+        }
+        const callback = (entries, observer) => {
+            if (entries[0].isIntersecting) {
+            this.loadMorePosts();
+            }
+        };
+        const observer = new IntersectionObserver(callback, options);
+        observer.observe(this.$refs.observer);
     },
     computed: {
         sortedPosts() {
@@ -120,9 +146,14 @@ export default {
         }
     },
     watch: {
+        // page() {
+        //     this.fetchPosts();
+        // }
     }
+
 }
 </script>
+
 <style>
 * {
     margin: 0;
@@ -153,5 +184,10 @@ export default {
 
 .current_page {
     background-color: aquamarine;
+}
+
+.observer {
+    height: 30px;
+    
 }
 </style>
